@@ -5,7 +5,7 @@ import RestaurantList from '@/components/RestaurantList.vue'
 </script>
 
 <template>
-  <main class="flex">
+  <main class="flex ml-10 gap-5">
     <FilterSidebar />
     <div>
       <FilterBar/>

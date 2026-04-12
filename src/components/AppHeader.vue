@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <header class="pt-14 pl-10">
+  <header class="pt-14 pl-10 pb-12.5">
     <svg
       width="274"
       height="40"
