@@ -3,3 +3,9 @@
 body {
   background-color: #FAFAFA;
 }
+
+.card-shadow {
+  box-shadow:
+    -4px 2px 10px 0 #00000003,
+    -16px 9px 18px 0 #00000003;
+}
