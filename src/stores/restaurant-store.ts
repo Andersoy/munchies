@@ -55,6 +55,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
         if (a.isCurrentlyOpen === b.isCurrentlyOpen) return b.rating - a.rating
         return a.isCurrentlyOpen ? -1 : 1;
       });
+      console.log('restaurants satt:', restaurants.value.length)
     } catch (err) {
       error.value = err instanceof Error ? err.message : 'Ukjent feil ved henting av restauranter';
     } finally {
@@ -64,10 +65,10 @@ export const useRestaurantStore = defineStore('restaurant', () => {
 
   async function fetchRestaurantOpenStatus(restaurantId: string): Promise<boolean> {
 
-    const res = await fetch(`${BASE_URL}/restaurants/open/${restaurantId}`);
+    const res = await fetch(`${BASE_URL}/open/${restaurantId}`);
 
     if (!res.ok) {
-      throw new Error(`Kunne ikke hente åpen/lukket-status: ${res.status}`);
+      return false;
     }
 
     const data: RestaurantOpenStatusResponse | RestaurantOpenStatusErrorResponse = await res.json();
@@ -80,8 +81,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
       return data.is_currently_open
     }
 
-    throw new Error('Ukjent feil ved henting av åpen/lukket-status')
-
+    return false;
   }
 
   async function fetchFilters() {
@@ -89,7 +89,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
     error.value = null;
 
     try {
-      const res = await fetch(`${BASE_URL}/filters`);
+      const res = await fetch(`${BASE_URL}/filter`);
 
       if (!res.ok) {
         throw new Error(`Kunne ikke hente filters: ${res.status}`);
