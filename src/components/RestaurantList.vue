@@ -8,7 +8,7 @@ const { restaurants } = storeToRefs(store)
 </script>
 
 <template>
-  <div class="w-253.75 grid gap-4.25 grid-cols-[repeat(auto-fill,minmax(327px,1fr))]">
+  <div class="flex flex-wrap gap-4.25">
     <RestaurantCard
       v-for="restaurant in restaurants"
       :key="restaurant.id"
