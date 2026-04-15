@@ -73,7 +73,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
     const data: RestaurantOpenStatusResponse | RestaurantOpenStatusErrorResponse = await res.json();
 
     if ('error' in data && data.error) {
-      throw new Error(data.reason);
+      return false;
     }
 
     if ('is_currently_open' in data) {
