@@ -8,7 +8,7 @@ import { onMounted } from 'vue'
 const store = useRestaurantStore()
 onMounted(async () => {
   await Promise.all([store.fetchRestaurants(), store.fetchFilters()])
-})
+});
 </script>
 
 <template>
