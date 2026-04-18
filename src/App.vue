@@ -3,15 +3,29 @@ import AppHeader from '@/components/AppHeader.vue'
 import SplashScreen from '@/components/SplashScreen.vue'
 import { storeToRefs } from 'pinia'
 import { useRestaurantStore } from '@/stores/restaurant-store.ts'
-
-const store = useRestaurantStore();
+import { onMounted } from 'vue'
+const store = useRestaurantStore()
 const { hasSeenSplash } = storeToRefs(store)
+
+onMounted(() => {
+  if (window.innerWidth >= 768) {
+    store.hasSeenSplash = true
+  }
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 768) {
+      store.hasSeenSplash = true
+    }
+  })
+})
 </script>
 
 <template>
   <SplashScreen v-if="!hasSeenSplash" class="md:hidden" />
-  <AppHeader />
-  <RouterView />
+  <template v-else>
+    <AppHeader />
+    <RouterView />
+  </template>
 </template>
 
 <style scoped></style>
