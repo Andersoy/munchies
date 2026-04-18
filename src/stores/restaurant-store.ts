@@ -21,6 +21,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
   const loadingFilters = ref(false);
   const error = ref<string | null>(null);
   const hasSeenSplash = ref(false);
+  const hasClickedContinue = ref(false);
 
   async function fetchRestaurants() {
     loadingRestaurants.value = true;
@@ -120,5 +121,6 @@ export const useRestaurantStore = defineStore('restaurant', () => {
     fetchRestaurants,
     fetchFilters,
     hasSeenSplash,
+    hasClickedContinue,
   };
 });

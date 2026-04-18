@@ -15,8 +15,10 @@ onMounted(() => {
   window.addEventListener('resize', () => {
     if (window.innerWidth >= 768) {
       store.hasSeenSplash = true
+    } else if (!store.hasClickedContinue) {
+      store.hasSeenSplash = false
     }
-  })
+  });
 })
 </script>
 
