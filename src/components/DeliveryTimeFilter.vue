@@ -1,8 +1,19 @@
 <script setup lang="ts">
+import { useRestaurantStore } from '@/stores/restaurant-store.ts'
+import { deliveryTimes } from '@/constants/filters.ts';
 const { layout = 'horizontal' } = defineProps<{
   layout?: 'horizontal' | 'vertical'
 }>()
-const deliveryTimes = ['0-10 min', '10-30 min', '30-60 min', '1 hour+']
+const store = useRestaurantStore();
+
+function toggleFilter(time: number) {
+  const index = store.activeFilters.deliveryTime.indexOf(time)
+  if (index === -1) {
+    store.activeFilters.deliveryTime.push(time)
+  } else {
+    store.activeFilters.deliveryTime.splice(index, 1)
+  }
+}
 </script>
 
 <template>
@@ -15,11 +26,12 @@ const deliveryTimes = ['0-10 min', '10-30 min', '30-60 min', '1 hour+']
     </h3>
     <div :class="layout === 'horizontal' ? 'flex flex-row' : 'flex flex-col'" class="gap-2.5">
       <button
+        @click="toggleFilter(time.value)"
         v-for="time in deliveryTimes"
-        :key="time"
+        :key="time.value"
         class="h-[31px] py-2 px-3 rounded-lg border-[0.6px] border-black/10 bg-white card-shadow cursor-pointer text-[12px] font-normal leading-[125%] tracking-[-0.5px]"
       >
-        {{ time }}
+        {{ time.label }}
       </button>
     </div>
   </div>

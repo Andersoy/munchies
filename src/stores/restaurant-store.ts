@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import type {
   Filter,
   FilterApi,
@@ -10,18 +10,38 @@ import type {
   RestaurantOpenStatusResponse,
   RestaurantsResponse,
 } from '@/types/restaurant-types'
+import { deliveryTimes } from '@/constants/filters.ts'
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const useRestaurantStore = defineStore('restaurant', () => {
   const restaurants = ref<Restaurant[]>([]);
   const filters = ref<Filter[]>([]);
-  const activeFilters = ref<string[]>([]);
   const loadingRestaurants = ref(false);
   const loadingFilters = ref(false);
   const error = ref<string | null>(null);
   const hasSeenSplash = ref(false);
   const hasClickedContinue = ref(false);
+  const activeFilters = ref({
+    deliveryTime: [] as number[],
+    foodCategory: [] as string[],
+    priceRange: [] as string[],
+  });
+
+  const filteredRestaurants = computed(() => {
+    return restaurants.value.filter((restaurant) => {
+      if (activeFilters.value.deliveryTime.length === 0) return true
+
+      return activeFilters.value.deliveryTime.some((filterValue) => {
+        const timeRange = deliveryTimes.find((dt) => dt.value === filterValue)
+        if (!timeRange) return false
+        return (
+          restaurant.deliveryTimeMinutes >= timeRange.min &&
+          restaurant.deliveryTimeMinutes < timeRange.max
+        )
+      })
+    })
+  })
 
   async function fetchRestaurants() {
     loadingRestaurants.value = true;
@@ -114,6 +134,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
     restaurants,
     filters,
     activeFilters,
+    filteredRestaurants,
     loadingRestaurants,
     loadingFilters,
     error,
@@ -121,5 +142,5 @@ export const useRestaurantStore = defineStore('restaurant', () => {
     fetchFilters,
     hasSeenSplash,
     hasClickedContinue,
-  };
+  }
 });
