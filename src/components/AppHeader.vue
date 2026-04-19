@@ -5,7 +5,7 @@ const { color = 'black' } = defineProps<{
 </script>
 
 <template>
-  <header class="pt-[94px] pl-6 md:pt-14 md:pl-10 md:pb-12.5">
+  <header class="pt-[94px] pb-6 pl-6 md:pt-14 md:pl-10 md:pb-12.5">
     <svg
       class="w-[167px] md:w-[274px]"
       viewBox="0 0 274 40"
