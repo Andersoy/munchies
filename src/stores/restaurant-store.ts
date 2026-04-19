@@ -28,21 +28,33 @@ export const useRestaurantStore = defineStore('restaurant', () => {
     priceRange: [] as string[],
   });
 
-  // Filter restaurants
   const filteredRestaurants = computed(() => {
     return restaurants.value.filter((restaurant) => {
-      if (activeFilters.value.deliveryTime.length === 0) return true
+      // Delivery time filter
+      if (activeFilters.value.deliveryTime.length > 0) {
+        const matchesDeliveryTime = activeFilters.value.deliveryTime.some((filterValue:number):boolean => {
 
-      return activeFilters.value.deliveryTime.some((filterValue) => {
-        const timeRange = deliveryTimes.find((dt) => dt.value === filterValue)
-        if (!timeRange) return false
-        return (
-          restaurant.deliveryTimeMinutes >= timeRange.min &&
-          restaurant.deliveryTimeMinutes < timeRange.max
-        )
-      })
-    })
-  })
+          //Checking if time range exists in filters
+          const timeRange = deliveryTimes.find((dt):boolean => dt.value === filterValue)
+          if (!timeRange) return false;
+
+          return (
+            restaurant.deliveryTimeMinutes >= timeRange.min &&
+            restaurant.deliveryTimeMinutes < timeRange.max
+          );
+        });
+        if (!matchesDeliveryTime) return false;
+      }
+
+      // Food category filter
+      // TODO
+
+      // Price range filter
+      // TODO
+
+      return true
+    });
+  });
 
   async function fetchRestaurants() {
     loadingRestaurants.value = true;
