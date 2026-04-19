@@ -24,7 +24,7 @@ export interface FiltersResponse {
 
 export interface RestaurantOpenStatusResponse {
   restaurant_id: string
-  is_currently_open: boolean
+  is_open: boolean
 }
 
 export interface RestaurantOpenStatusErrorResponse {

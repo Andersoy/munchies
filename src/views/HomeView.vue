@@ -8,12 +8,12 @@ import { onMounted } from 'vue'
 const store = useRestaurantStore()
 onMounted(async () => {
   await Promise.all([store.fetchRestaurants(), store.fetchFilters()])
-});
+})
 </script>
 
 <template>
-  <main class="flex ml-10 gap-5 max-w-360 mx-auto">
-    <FilterSidebar />
+  <main class="px-5 md:flex md:ml-10 md:gap-5 md:max-w-360 mx-auto">
+    <FilterSidebar class="hidden md:block" />
     <div class="flex-1">
       <FilterBar />
       <h2 class="text-[40px] font-normal leading-none tracking-[-0.5px] mt-10 mb-8">Restaurants</h2>
