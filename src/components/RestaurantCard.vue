@@ -2,6 +2,7 @@
 import type { Restaurant } from '@/types/restaurant-types'
 import { deliveryTimes } from '@/constants/filters.ts'
 import ArrowIcon from '@/assets/icons/arrow.svg?component'
+import { BASE_URL } from '@/constants/api.ts'
 
 const { restaurant } = defineProps<{
   restaurant: Restaurant
@@ -18,10 +19,15 @@ function formatDeliveryTime(deliveryTimeInMinutes: number) {
 
 <template>
   <!--  TODO Add hover effect-->
-  <button class="cursor-pointer">
-    <div
-      class="card-shadow w-[327px] h-[202px] rounded-[8px] border-[0.6px] border-black/10 bg-white p-4 flex flex-col justify-between"
-    >
+  <div
+    class="card-shadow w-[327px] h-[202px] rounded-[8px] border-[0.6px] border-black/10 bg-white cursor-pointer relative overflow-hidden"
+  >
+    <img
+      :src="BASE_URL + restaurant.imageUrl"
+      alt="food picture"
+      class="absolute -right-8 -top-8 w-[140px] h-[140px] object-cover rounded-[8px]"
+    />
+    <div class="p-4 flex flex-col justify-between h-full">
       <div class="flex flex-row gap-1">
         <!--      Open status-->
         <div
@@ -52,7 +58,7 @@ function formatDeliveryTime(deliveryTimeInMinutes: number) {
         </div>
       </div>
     </div>
-  </button>
+  </div>
 </template>
 
 <style scoped></style>

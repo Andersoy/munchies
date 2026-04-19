@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
+import { API_URL } from '@/constants/api.ts'
 import type {
   Filter,
   FilterApi,
@@ -12,7 +13,6 @@ import type {
 } from '@/types/restaurant-types'
 import { deliveryTimes } from '@/constants/filters.ts'
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const useRestaurantStore = defineStore('restaurant', () => {
   const restaurants = ref<Restaurant[]>([]);
@@ -61,7 +61,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
     error.value = null;
 
     try {
-      const res = await fetch(`${BASE_URL}/restaurants`);
+      const res = await fetch(`${API_URL}/restaurants`);
 
       if (!res.ok) {
         throw new Error(`Kunne ikke hente restauranter: ${res.status}`);
@@ -100,7 +100,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
 
   async function fetchRestaurantOpenStatus(restaurantId: string): Promise<boolean> {
 
-    const res = await fetch(`${BASE_URL}/open/${restaurantId}`);
+    const res = await fetch(`${API_URL}/open/${restaurantId}`);
 
     if (!res.ok) {
       return false;
@@ -123,7 +123,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
     error.value = null;
 
     try {
-      const res = await fetch(`${BASE_URL}/filter`);
+      const res = await fetch(`${API_URL}/filter`);
 
       if (!res.ok) {
         throw new Error(`Kunne ikke hente filters: ${res.status}`);
