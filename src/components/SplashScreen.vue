@@ -11,7 +11,7 @@ function handleContinue() {
 </script>
 
 <template>
-  <div class="bg-[#00703A] w-screen h-screen flex flex-col justify-between">
+  <div class="bg-[#00703A] w-screen h-dvh flex flex-col justify-between">
     <AppHeader color="white" />
     <div class="ml-6 text-white max-w-[246px]">
       <h2 class="font-display text-[48px] font-extrabold leading-none tracking-[-1px]">Treat Yourself.</h2>
