@@ -53,7 +53,7 @@ function formatDeliveryTime(deliveryTimeInMinutes: number) {
           {{ restaurant.name }}
         </h3>
         <!--      green button-->
-        <div class="w-8 h-8 rounded-full bg-[#00703A] flex items-center justify-center">
+        <div class="w-8 h-8 rounded-full bg-[#00703A] flex items-center justify-center shrink-0">
           <ArrowIcon />
         </div>
       </div>
