@@ -28,6 +28,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
     priceRange: [] as string[],
   });
 
+  // Filter restaurants
   const filteredRestaurants = computed(() => {
     return restaurants.value.filter((restaurant) => {
       if (activeFilters.value.deliveryTime.length === 0) return true
