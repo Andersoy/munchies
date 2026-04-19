@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useRestaurantStore } from '@/stores/restaurant-store.ts'
-import { deliveryTimes } from '@/constants/filters.ts';
+import { deliveryTimes } from '@/constants/filters.ts'
 const { layout = 'horizontal' } = defineProps<{
   layout?: 'horizontal' | 'vertical'
-}>()
+}>();
 const store = useRestaurantStore();
 
 function toggleFilter(time: number) {
@@ -29,7 +29,8 @@ function toggleFilter(time: number) {
         @click="toggleFilter(time.value)"
         v-for="time in deliveryTimes"
         :key="time.value"
-        class="h-[31px] py-2 px-3 rounded-lg border-[0.6px] border-black/10 bg-white card-shadow cursor-pointer text-[12px] font-normal leading-[125%] tracking-[-0.5px]"
+        :class="store.activeFilters.deliveryTime.includes(time.value) ? 'border-blue-500' : 'border-black/10'"
+        class="h-[31px] py-2 px-3 rounded-lg border-[0.6px] bg-white card-shadow cursor-pointer text-[12px] font-normal leading-[125%] tracking-[-0.5px]"
       >
         {{ time.label }}
       </button>
