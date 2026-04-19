@@ -16,9 +16,9 @@ onMounted(async () => {
   <main class="px-5 md:flex md:ml-10 md:gap-5 md:max-w-360 mx-auto">
     <FilterSidebar class="hidden md:block" />
     <div class="flex-1">
-      <DeliveryTimeFilter class="md:hidden" :layout="'horizontal'"/>
+      <DeliveryTimeFilter class="md:hidden" :layout="'horizontal'" />
       <FilterBar />
-      <h2 class="text-[40px] font-normal leading-none tracking-[-0.5px] mt-10 mb-8">Restaurants</h2>
+      <h2 class="text-[20px] font-normal leading-none tracking-[-0.5px] mt-10 mb-8">Restaurants</h2>
       <RestaurantList />
     </div>
   </main>

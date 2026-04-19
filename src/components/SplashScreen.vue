@@ -14,7 +14,7 @@ function handleContinue() {
   <div class="bg-[#00703A] w-screen h-screen flex flex-col justify-between">
     <AppHeader color="white" />
     <div class="ml-6 text-white max-w-[246px]">
-      <h2 class="text-[48px] font-black leading-none tracking-[-1px]">Treat Yourself.</h2>
+      <h2 class="font-display text-[48px] font-extrabold leading-none tracking-[-1px]">Treat Yourself.</h2>
       <p class="text-[14px] font-normal leading-[150%] tracking-[-0.5px]">
         Find the best restaurants in your city and get it delivered to your place!
       </p>
