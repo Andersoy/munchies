@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Restaurant } from '@/types/restaurant-types'
 import { deliveryTimes } from '@/constants/filters.ts'
+import ArrowIcon from '@/assets/icons/arrow.svg?component'
 
 const { restaurant } = defineProps<{
   restaurant: Restaurant
@@ -16,7 +17,7 @@ function formatDeliveryTime(deliveryTimeInMinutes: number) {
 </script>
 
 <template>
-<!--  Add hover effect-->
+  <!--  TODO Add hover effect-->
   <button class="cursor-pointer">
     <div
       class="card-shadow w-[327px] h-[202px] rounded-[8px] border-[0.6px] border-black/10 bg-white p-4 flex flex-col justify-between"
@@ -46,7 +47,9 @@ function formatDeliveryTime(deliveryTimeInMinutes: number) {
           {{ restaurant.name }}
         </h3>
         <!--      green button-->
-        <div></div>
+        <div class="w-8 h-8 rounded-full bg-[#00703A] flex items-center justify-center">
+          <ArrowIcon />
+        </div>
       </div>
     </div>
   </button>
