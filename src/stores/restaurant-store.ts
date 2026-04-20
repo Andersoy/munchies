@@ -90,7 +90,6 @@ export const useRestaurantStore = defineStore('restaurant', () => {
         if (a.isCurrentlyOpen === b.isCurrentlyOpen) return b.rating - a.rating
         return a.isCurrentlyOpen ? -1 : 1;
       });
-      console.log('restaurants satt:', restaurants.value.length)
     } catch (err) {
       error.value = err instanceof Error ? err.message : 'Ukjent feil ved henting av restauranter';
     } finally {

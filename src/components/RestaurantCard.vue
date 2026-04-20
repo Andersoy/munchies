@@ -25,7 +25,7 @@ function formatDeliveryTime(deliveryTimeInMinutes: number) {
     <img
       :src="BASE_URL + restaurant.imageUrl"
       alt="food picture"
-      class="absolute -right-8 -top-8 w-[140px] h-[140px] object-cover rounded-[8px]"
+      class="absolute -right-7.5 -top-7.5 w-[140px] h-[140px] object-cover rounded-[8px]"
     />
     <div class="p-4 flex flex-col justify-between h-full">
       <div class="flex flex-row gap-1">
