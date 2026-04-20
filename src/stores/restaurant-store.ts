@@ -30,6 +30,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
 
   const filteredRestaurants = computed(() => {
     return restaurants.value.filter((restaurant) => {
+
       // Delivery time filter
       if (activeFilters.value.deliveryTime.length > 0) {
         const matchesDeliveryTime = activeFilters.value.deliveryTime.some((filterValue:number):boolean => {
@@ -45,9 +46,15 @@ export const useRestaurantStore = defineStore('restaurant', () => {
         });
         if (!matchesDeliveryTime) return false;
       }
-
       // Food category filter
-      // TODO
+      if (activeFilters.value.foodCategory.length > 0) {
+        const matchesFoodCategory = activeFilters.value.foodCategory.some((filterValue:string):boolean => {
+          //Checking if food category exists in filters
+          console.log('filterValue:', filterValue, 'filterIds:', restaurant.filterIds)
+          return restaurant.filterIds.includes(filterValue)
+        })
+        if (!matchesFoodCategory) return false
+      }
 
       // Price range filter
       // TODO
@@ -125,7 +132,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
       const res = await fetch(`${API_URL}/filter`);
 
       if (!res.ok) {
-        throw new Error(`Kunne ikke hente filters: ${res.status}`);
+        throw new Error(`Failed to fetch filters: ${res.status}`);
       }
 
       const data: FiltersResponse = await res.json();
@@ -136,7 +143,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
         imageUrl: filter.image_url,
       }));
     } catch (err) {
-      error.value = err instanceof Error ? err.message : 'Ukjent feil ved henting av filters';
+      error.value = err instanceof Error ? err.message : 'Unknown error while fetching filters';
     } finally {
       loadingFilters.value = false;
     }

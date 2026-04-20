@@ -19,7 +19,7 @@ onMounted(async () => {
       <DeliveryTimeFilter class="md:hidden pt-5 px-5" :layout="'horizontal'" />
 
 <!--      Only show filterbar if API returns filters-->
-      <FilterBar v-if="store.filters.length > 0" class="pl-5 mt-6" />
+      <FilterBar v-if="store.filters.length > 0" class="px-5 mt-6" />
       <h2 class="px-5 text-[20px] font-normal leading-none tracking-[-0.5px] mt-6 mb-8">
         Restaurants
       </h2>
