@@ -9,7 +9,7 @@ import type {
   RestaurantApi,
   RestaurantOpenStatusErrorResponse,
   RestaurantOpenStatusResponse,
-  RestaurantsResponse,
+  RestaurantsResponse
 } from '@/types/restaurant-types'
 import { deliveryTimes } from '@/constants/filters.ts'
 
@@ -60,7 +60,11 @@ export const useRestaurantStore = defineStore('restaurant', () => {
       // TODO
 
       return true
-    });
+    //   Sort by placing open restaurants first
+    }).sort((a, b) => {
+      if (a.isCurrentlyOpen === b.isCurrentlyOpen) return b.rating - a.rating
+      return a.isCurrentlyOpen ? -1 : 1
+    })
   });
 
   async function fetchRestaurants() {
@@ -68,17 +72,17 @@ export const useRestaurantStore = defineStore('restaurant', () => {
     error.value = null;
 
     try {
-      const res = await fetch(`${API_URL}/restaurants`);
+      const res = await fetch(`${API_URL}/restaurants`)
 
       if (!res.ok) {
-        throw new Error(`Kunne ikke hente restauranter: ${res.status}`);
+        throw new Error(`Kunne ikke hente restauranter: ${res.status}`)
       }
 
-      const data: RestaurantsResponse = await res.json();
+      const data: RestaurantsResponse = await res.json()
 
-      const restaurantsWithStatus = await Promise.all(
+      restaurants.value = await Promise.all(
         data.restaurants.map(async (restaurant: RestaurantApi) => {
-          const isCurrentlyOpen = await fetchRestaurantOpenStatus(restaurant.id);
+          const isCurrentlyOpen = await fetchRestaurantOpenStatus(restaurant.id)
 
           return {
             id: restaurant.id,
@@ -89,14 +93,9 @@ export const useRestaurantStore = defineStore('restaurant', () => {
             deliveryTimeMinutes: restaurant.delivery_time_minutes,
             priceRangeId: restaurant.price_range_id,
             isCurrentlyOpen,
-          };
+          }
         }),
-      );
-
-      restaurants.value = restaurantsWithStatus.sort((a, b) => {
-        if (a.isCurrentlyOpen === b.isCurrentlyOpen) return b.rating - a.rating
-        return a.isCurrentlyOpen ? -1 : 1;
-      });
+      )
     } catch (err) {
       error.value = err instanceof Error ? err.message : 'Ukjent feil ved henting av restauranter';
     } finally {

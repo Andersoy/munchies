@@ -22,10 +22,21 @@ function formatDeliveryTime(deliveryTimeInMinutes: number) {
   <div
     class="card-shadow w-[327px] h-[202px] rounded-[8px] border-[0.6px] border-black/10 bg-white cursor-pointer relative overflow-hidden"
   >
+    <!--    Hard coded opening time as this info was not available from API-->
+    <div
+      v-if="!restaurant.isCurrentlyOpen"
+      class="absolute left-1/2 -translate-x-1/2 top-[85px] card-shadow w-[160px] h-[28px] rounded-[4px] border-[0.6px] border-black/10 bg-[#FAFAFA] py-2 pr-3 pl-[10px] flex items-center"
+    >
+      <span class="text-[12px] font-normal leading-none tracking-[-0.5px]"
+        >Opens tomorrow at 12 pm</span
+      >
+    </div>
+
     <img
       :src="BASE_URL + restaurant.imageUrl"
       alt="food picture"
       class="absolute -right-7.5 -top-7.5 w-[140px] h-[140px] object-cover rounded-[8px]"
+      :class="restaurant.isCurrentlyOpen ? 'opacity-100' : 'opacity-20'"
     />
     <div class="p-4 flex flex-col justify-between h-full">
       <div class="flex flex-row gap-1">
@@ -48,7 +59,10 @@ function formatDeliveryTime(deliveryTimeInMinutes: number) {
           {{ formatDeliveryTime(restaurant.deliveryTimeMinutes) }}
         </span>
       </div>
-      <div class="flex flex-row justify-between">
+      <div
+        class="flex flex-row justify-between"
+        :class="restaurant.isCurrentlyOpen ? 'opacity-100' : 'opacity-20'"
+      >
         <h3 class="text-[24px] font-normal leading-none tracking-[-0.5px]">
           {{ restaurant.name }}
         </h3>
