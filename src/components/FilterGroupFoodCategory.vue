@@ -1,41 +1,33 @@
 <script setup lang="ts">
 import { useRestaurantStore } from '@/stores/restaurant-store.ts'
-
-type FilterKey = 'deliveryTime' | 'priceRange'
+import { storeToRefs } from 'pinia'
+const { foodCategoryFilters } = storeToRefs(useRestaurantStore())
 
 const store = useRestaurantStore()
-
-const { layout = 'horizontal' } = defineProps<{
-  layout?: 'horizontal' | 'vertical'
-  filterKey: FilterKey
-  options: { label: string; value: string}[]
-  title: string
-}>()
 
 </script>
 
 <template>
   <div>
     <h3
-      :class="layout === 'horizontal' ? 'mb-[10px]' : 'mb-[4]'"
       class="text-[12px] font-[590] leading-none tracking-[-0.5px] uppercase opacity-40"
     >
-      {{title}}
+      Food Category
     </h3>
-    <div :class="layout === 'horizontal' ? 'flex flex-row' : 'flex flex-col'" class="gap-2.5">
+    <div class="gap-2.5 flex flex-col">
       <!-- TODO: find active border color from Figma -->
       <button
-        @click="store.toggleFilters(filterKey, option.value)"
-        v-for="option in options"
-        :key="option.value"
+        @click="store.toggleFilters('foodCategory', foodCategory.id)"
+        v-for="foodCategory in foodCategoryFilters"
+        :key="foodCategory.id"
         :class="
-          store.activeFilters[filterKey].includes(option.value)
+          store.activeFilters['foodCategory'].includes(foodCategory.id)
             ? 'border-blue-500'
             : 'border-black/10'
         "
         class="h-[31px] py-2 px-3 rounded-lg border-[0.6px] bg-white card-shadow cursor-pointer text-[12px] font-normal leading-[125%] tracking-[-0.5px]"
       >
-        {{ option.label }}
+        {{ foodCategory.name }}
       </button>
     </div>
   </div>

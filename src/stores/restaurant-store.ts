@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import { API_URL } from '@/constants/api.ts'
 import type {
-  Filter,
+  FoodCategoryFilter,
   FilterApi,
   FiltersResponse,
   Restaurant,
@@ -16,63 +16,79 @@ import { deliveryTimes } from '@/constants/filters.ts'
 
 
 export const useRestaurantStore = defineStore('restaurant', () => {
-  const restaurants = ref<Restaurant[]>([]);
-  const filters = ref<Filter[]>([]);
-  const loadingRestaurants = ref(false);
-  const loadingFilters = ref(false);
-  const error = ref<string | null>(null);
-  const hasSeenSplash = ref(false);
-  const hasClickedContinue = ref(false);
+  const restaurants = ref<Restaurant[]>([])
+  const foodCategoryFilters = ref<FoodCategoryFilter[]>([])
+  const loadingRestaurants = ref(false)
+  const loadingFilters = ref(false)
+  const error = ref<string | null>(null)
+  const hasSeenSplash = ref(false)
+  const hasClickedContinue = ref(false)
   const activeFilters = ref({
-    deliveryTime: [] as number[],
+    deliveryTime: [] as string[],
     foodCategory: [] as string[],
     priceRange: [] as string[],
-  });
+  })
 
   // Store price range IDs one time to avoid unnecessary API calls
   const priceRangeCache = ref<Record<string, Promise<string>>>({})
 
+  // To be used in toggleFilters()
+  const priceRangeOptions = ref<{ label: string; value: string }[]>([])
+
   const filteredRestaurants = computed(() => {
-    return restaurants.value.filter((restaurant) => {
+    return restaurants.value
+      .filter((restaurant) => {
+        // Delivery time filter
+        if (activeFilters.value.deliveryTime.length > 0) {
+          const matchesDeliveryTime = activeFilters.value.deliveryTime.some(
+            (filterValue: string): boolean => {
+              //Checking if time range exists in filters
+              const timeRange = deliveryTimes.find((dt): boolean => dt.value === filterValue)
+              if (!timeRange) return false
 
-      // Delivery time filter
-      if (activeFilters.value.deliveryTime.length > 0) {
-        const matchesDeliveryTime = activeFilters.value.deliveryTime.some((filterValue:number):boolean => {
+              return (
+                restaurant.deliveryTimeMinutes >= timeRange.min &&
+                restaurant.deliveryTimeMinutes < timeRange.max
+              )
+            },
+          )
+          if (!matchesDeliveryTime) return false
+        }
+        // Food category filter
+        if (activeFilters.value.foodCategory.length > 0) {
+          const matchesFoodCategory = activeFilters.value.foodCategory.some(
+            (filterValue: string): boolean => {
+              //Checking if food category exists in filters
+              return restaurant.filterIds.includes(filterValue)
+            },
+          )
+          if (!matchesFoodCategory) return false
+        }
 
-          //Checking if time range exists in filters
-          const timeRange = deliveryTimes.find((dt):boolean => dt.value === filterValue)
-          if (!timeRange) return false;
+        // Price range filter
+        if (activeFilters.value.priceRange.length > 0) {
+          const matchesPriceRange = activeFilters.value.priceRange.some(
+            (filterValue: string): boolean => {
+              //Checking if price range exists in filters
+              return restaurant.priceRange === filterValue
+            },
+          )
+          if (!matchesPriceRange) return false
+        }
 
-          return (
-            restaurant.deliveryTimeMinutes >= timeRange.min &&
-            restaurant.deliveryTimeMinutes < timeRange.max
-          );
-        });
-        if (!matchesDeliveryTime) return false;
-      }
-      // Food category filter
-      if (activeFilters.value.foodCategory.length > 0) {
-        const matchesFoodCategory = activeFilters.value.foodCategory.some((filterValue:string):boolean => {
-          //Checking if food category exists in filters
-          return restaurant.filterIds.includes(filterValue)
-        })
-        if (!matchesFoodCategory) return false
-      }
+        return true
+        //   Sort by placing open restaurants first
+      })
+      .sort((a, b) => {
+        if (a.isCurrentlyOpen === b.isCurrentlyOpen) return b.rating - a.rating
+        return a.isCurrentlyOpen ? -1 : 1
+      })
+  })
 
-      // Price range filter
-      // TODO
-
-      return true
-    //   Sort by placing open restaurants first
-    }).sort((a, b) => {
-      if (a.isCurrentlyOpen === b.isCurrentlyOpen) return b.rating - a.rating
-      return a.isCurrentlyOpen ? -1 : 1
-    })
-  });
-
+  // API
   async function fetchRestaurants() {
-    loadingRestaurants.value = true;
-    error.value = null;
+    loadingRestaurants.value = true
+    error.value = null
 
     try {
       const res = await fetch(`${API_URL}/restaurants`)
@@ -87,13 +103,20 @@ export const useRestaurantStore = defineStore('restaurant', () => {
         data.restaurants.map(async (restaurant: RestaurantApi) => {
           const isCurrentlyOpen = await fetchRestaurantOpenStatus(restaurant.id)
           // Set price range
-          let priceRange: string = "";
-          if(priceRangeCache.value[restaurant.price_range_id] === undefined){
-            priceRangeCache.value[restaurant.price_range_id] = fetchPriceRange(restaurant.price_range_id)
+          let priceRange: string = ''
+          if (priceRangeCache.value[restaurant.price_range_id] === undefined) {
+            priceRangeCache.value[restaurant.price_range_id] = fetchPriceRange(
+              restaurant.price_range_id,
+            )
           }
-          priceRange = await priceRangeCache.value[restaurant.price_range_id] ?? "Price Range not found"
+          priceRange =
+            (await priceRangeCache.value[restaurant.price_range_id]) ?? 'Price Range not found'
 
-
+          // Storing price range to be used for filtering
+          if (!priceRangeOptions.value.some((o) => o.value === priceRange)) {
+            priceRangeOptions.value.push({ label: priceRange, value: priceRange })
+            priceRangeOptions.value.sort((a, b) => a.value.length - b.value.length)
+          }
           return {
             id: restaurant.id,
             name: restaurant.name,
@@ -107,9 +130,9 @@ export const useRestaurantStore = defineStore('restaurant', () => {
         }),
       )
     } catch (err) {
-      error.value = err instanceof Error ? err.message : 'Ukjent feil ved henting av restauranter';
+      error.value = err instanceof Error ? err.message : 'Ukjent feil ved henting av restauranter'
     } finally {
-      loadingRestaurants.value = false;
+      loadingRestaurants.value = false
     }
   }
 
@@ -121,63 +144,71 @@ export const useRestaurantStore = defineStore('restaurant', () => {
     }
     const data: RestaurantPriceRangeResponse | RestaurantAPIErrorResponse = await res.json()
     if ('error' in data && data.error) {
-      return "Price range not found"
+      return 'Price range not found'
     }
 
     if ('range' in data) {
-      return data.range;
+      return data.range
     }
-    return "Price range not found"
+    return 'Price range not found'
   }
 
   async function fetchRestaurantOpenStatus(restaurantId: string): Promise<boolean> {
-
-    const res = await fetch(`${API_URL}/open/${restaurantId}`);
+    const res = await fetch(`${API_URL}/open/${restaurantId}`)
 
     if (!res.ok) {
-      return false;
+      return false
     }
 
-    const data: RestaurantOpenStatusResponse | RestaurantAPIErrorResponse = await res.json();
+    const data: RestaurantOpenStatusResponse | RestaurantAPIErrorResponse = await res.json()
     if ('error' in data && data.error) {
-      return false;
+      return false
     }
 
     if ('is_open' in data) {
-      return data.is_open;
+      return data.is_open
     }
 
-    return false;
+    return false
   }
 
   async function fetchFilters() {
-    loadingFilters.value = true;
-    error.value = null;
+    loadingFilters.value = true
+    error.value = null
 
     try {
-      const res = await fetch(`${API_URL}/filter`);
+      const res = await fetch(`${API_URL}/filter`)
 
       if (!res.ok) {
-        throw new Error(`Failed to fetch filters: ${res.status}`);
+        throw new Error(`Failed to fetch filters: ${res.status}`)
       }
 
-      const data: FiltersResponse = await res.json();
+      const data: FiltersResponse = await res.json()
 
-      filters.value = data.filters.map((filter: FilterApi) => ({
+      foodCategoryFilters.value = data.filters.map((filter: FilterApi) => ({
         id: filter.id,
         name: filter.name,
         imageUrl: filter.image_url,
-      }));
+      }))
     } catch (err) {
-      error.value = err instanceof Error ? err.message : 'Unknown error while fetching filters';
+      error.value = err instanceof Error ? err.message : 'Unknown error while fetching filters'
     } finally {
-      loadingFilters.value = false;
+      loadingFilters.value = false
     }
   }
 
+  function toggleFilters(filterKey: string, value: string) {
+    const filterArray = activeFilters.value[filterKey as keyof typeof activeFilters.value]
+    const index = filterArray.indexOf(value)
+    if (index === -1) {
+      filterArray.push(value)
+    } else {
+      filterArray.splice(index, 1)
+    }
+  }
   return {
     restaurants,
-    filters,
+    foodCategoryFilters,
     activeFilters,
     filteredRestaurants,
     loadingRestaurants,
@@ -187,5 +218,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
     fetchFilters,
     hasSeenSplash,
     hasClickedContinue,
+    toggleFilters,
+    priceRangeOptions,
   }
 });

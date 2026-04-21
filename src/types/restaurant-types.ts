@@ -48,7 +48,7 @@ export interface Restaurant {
   isCurrentlyOpen: boolean
 }
 
-export interface Filter {
+export interface FoodCategoryFilter {
   id: string
   name: string
   imageUrl: string
