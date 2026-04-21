@@ -1,24 +1,23 @@
 <script setup lang="ts">
 import { useRestaurantStore } from '@/stores/restaurant-store.ts'
-import { deliveryTimes } from '@/constants/filters.ts'
 
 type FilterKey = 'deliveryTime' | 'foodCategory' | 'priceRange'
+
+const store = useRestaurantStore()
 
 const { layout = 'horizontal' } = defineProps<{
   layout?: 'horizontal' | 'vertical'
   filterKey: FilterKey
   options: { label: string; value: string | number }[]
-
+  title: string
 }>()
-const store = useRestaurantStore()
 
-
-function toggleFilter(time: number) {
-  const index = store.activeFilters.deliveryTime.indexOf(time)
+function toggleFilter(option: number | string) {
+  const index = (store.activeFilters[filterKey] as (number | string)[]).indexOf(option)
   if (index === -1) {
-    store.activeFilters.deliveryTime.push(time)
+    store.activeFilters[filterKey].push(option)
   } else {
-    store.activeFilters.deliveryTime.splice(index, 1)
+    store.activeFilters[filterKey].splice(index, 1)
   }
 }
 </script>
@@ -29,22 +28,22 @@ function toggleFilter(time: number) {
       :class="layout === 'horizontal' ? 'mb-[10px]' : 'mb-[4]'"
       class="text-[12px] font-[590] leading-none tracking-[-0.5px] uppercase opacity-40"
     >
-      Delivery time
+      {{title}}
     </h3>
     <div :class="layout === 'horizontal' ? 'flex flex-row' : 'flex flex-col'" class="gap-2.5">
       <!-- TODO: find active border color from Figma -->
       <button
-        @click="toggleFilter(time.value)"
-        v-for="time in deliveryTimes"
-        :key="time.value"
+        @click="toggleFilter(option.value)"
+        v-for="option in options"
+        :key="option.value"
         :class="
-          store.activeFilters.deliveryTime.includes(time.value)
+          store.activeFilters.deliveryTime.includes(option.value)
             ? 'border-blue-500'
             : 'border-black/10'
         "
         class="h-[31px] py-2 px-3 rounded-lg border-[0.6px] bg-white card-shadow cursor-pointer text-[12px] font-normal leading-[125%] tracking-[-0.5px]"
       >
-        {{ time.label }}
+        {{ option.label }}
       </button>
     </div>
   </div>

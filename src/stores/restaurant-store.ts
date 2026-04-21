@@ -106,7 +106,6 @@ export const useRestaurantStore = defineStore('restaurant', () => {
           }
         }),
       )
-      console.log(restaurants.value)
     } catch (err) {
       error.value = err instanceof Error ? err.message : 'Ukjent feil ved henting av restauranter';
     } finally {
