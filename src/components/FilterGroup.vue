@@ -1,10 +1,17 @@
 <script setup lang="ts">
 import { useRestaurantStore } from '@/stores/restaurant-store.ts'
 import { deliveryTimes } from '@/constants/filters.ts'
+
+type FilterKey = 'deliveryTime' | 'foodCategory' | 'priceRange'
+
 const { layout = 'horizontal' } = defineProps<{
   layout?: 'horizontal' | 'vertical'
+  filterKey: FilterKey
+  options: { label: string; value: string | number }[]
+
 }>()
 const store = useRestaurantStore()
+
 
 function toggleFilter(time: number) {
   const index = store.activeFilters.deliveryTime.indexOf(time)

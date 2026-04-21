@@ -27,7 +27,12 @@ export interface RestaurantOpenStatusResponse {
   is_open: boolean
 }
 
-export interface RestaurantOpenStatusErrorResponse {
+export interface RestaurantPriceRangeResponse {
+  id: string
+  range: string
+}
+
+export interface RestaurantAPIErrorResponse {
   error: true
   reason: string
 }
@@ -39,7 +44,7 @@ export interface Restaurant {
   filterIds: string[]
   imageUrl: string
   deliveryTimeMinutes: number
-  priceRangeId: string
+  priceRange: string
   isCurrentlyOpen: boolean
 }
 

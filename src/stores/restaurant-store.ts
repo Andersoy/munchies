@@ -7,9 +7,10 @@ import type {
   FiltersResponse,
   Restaurant,
   RestaurantApi,
-  RestaurantOpenStatusErrorResponse,
+  RestaurantAPIErrorResponse,
   RestaurantOpenStatusResponse,
-  RestaurantsResponse
+  RestaurantPriceRangeResponse,
+  RestaurantsResponse,
 } from '@/types/restaurant-types'
 import { deliveryTimes } from '@/constants/filters.ts'
 
@@ -27,6 +28,9 @@ export const useRestaurantStore = defineStore('restaurant', () => {
     foodCategory: [] as string[],
     priceRange: [] as string[],
   });
+
+  // Store price range IDs one time to avoid unnecessary API calls
+  const priceRangeCache = ref<Record<string, Promise<string>>>({})
 
   const filteredRestaurants = computed(() => {
     return restaurants.value.filter((restaurant) => {
@@ -50,7 +54,6 @@ export const useRestaurantStore = defineStore('restaurant', () => {
       if (activeFilters.value.foodCategory.length > 0) {
         const matchesFoodCategory = activeFilters.value.foodCategory.some((filterValue:string):boolean => {
           //Checking if food category exists in filters
-          console.log('filterValue:', filterValue, 'filterIds:', restaurant.filterIds)
           return restaurant.filterIds.includes(filterValue)
         })
         if (!matchesFoodCategory) return false
@@ -83,6 +86,13 @@ export const useRestaurantStore = defineStore('restaurant', () => {
       restaurants.value = await Promise.all(
         data.restaurants.map(async (restaurant: RestaurantApi) => {
           const isCurrentlyOpen = await fetchRestaurantOpenStatus(restaurant.id)
+          // Set price range
+          let priceRange: string = "";
+          if(priceRangeCache.value[restaurant.price_range_id] === undefined){
+            priceRangeCache.value[restaurant.price_range_id] = fetchPriceRange(restaurant.price_range_id)
+          }
+          priceRange = await priceRangeCache.value[restaurant.price_range_id] ?? "Price Range not found"
+
 
           return {
             id: restaurant.id,
@@ -91,16 +101,34 @@ export const useRestaurantStore = defineStore('restaurant', () => {
             filterIds: restaurant.filter_ids,
             imageUrl: restaurant.image_url,
             deliveryTimeMinutes: restaurant.delivery_time_minutes,
-            priceRangeId: restaurant.price_range_id,
+            priceRange: priceRange,
             isCurrentlyOpen,
           }
         }),
       )
+      console.log(restaurants.value)
     } catch (err) {
       error.value = err instanceof Error ? err.message : 'Ukjent feil ved henting av restauranter';
     } finally {
       loadingRestaurants.value = false;
     }
+  }
+
+  async function fetchPriceRange(priceRangeId: string): Promise<string> {
+    const res = await fetch(`${API_URL}/price-range/${priceRangeId}`)
+
+    if (!res.ok) {
+      return 'Price range not found'
+    }
+    const data: RestaurantPriceRangeResponse | RestaurantAPIErrorResponse = await res.json()
+    if ('error' in data && data.error) {
+      return "Price range not found"
+    }
+
+    if ('range' in data) {
+      return data.range;
+    }
+    return "Price range not found"
   }
 
   async function fetchRestaurantOpenStatus(restaurantId: string): Promise<boolean> {
@@ -111,7 +139,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
       return false;
     }
 
-    const data: RestaurantOpenStatusResponse | RestaurantOpenStatusErrorResponse = await res.json();
+    const data: RestaurantOpenStatusResponse | RestaurantAPIErrorResponse = await res.json();
     if ('error' in data && data.error) {
       return false;
     }
