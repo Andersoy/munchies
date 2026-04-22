@@ -24,6 +24,7 @@ const activeFoodCategories = computed(() =>
       <!-- Add this :class if showing all categories: -->
       <!-- :class="store.activeFilters.foodCategory.includes(foodCategory.id) ? 'border-blue-500' : 'border-black/10'" -->
       <button
+        type="button"
         v-for="foodCategory in activeFoodCategories"
         @click="store.toggleFilters('foodCategory', foodCategory.id)"
         :key="foodCategory.id"
