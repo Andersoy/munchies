@@ -5,12 +5,12 @@
     class="w-full h-[202px] rounded-[8px] border-[0.6px] border-black/10 bg-white relative overflow-hidden animate-pulse"
   >
     <div class="p-4 flex flex-col justify-between h-full">
-      <!-- badges -->
+      <!-- badges placeholder -->
       <div class="flex gap-1">
         <div class="h-[28px] w-[70px] bg-gray-200 rounded-full" />
         <div class="h-[28px] w-[80px] bg-gray-200 rounded-full" />
       </div>
-      <!-- name -->
+      <!-- name placeholder-->
       <div class="h-[24px] w-[150px] bg-gray-200 rounded" />
     </div>
     <!-- picture placeholder -->
