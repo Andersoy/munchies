@@ -24,8 +24,8 @@ const { compact = false } = defineProps<{
     <div :class="layout === 'horizontal' ? 'flex flex-row flex-wrap' : 'flex flex-col'" class="gap-2.5">
       <!-- TODO: find active border color from Figma -->
       <button
-        @click="store.toggleFilters(filterKey, option.value)"
         v-for="option in options"
+        @click="store.toggleFilters(filterKey, option.value)"
         :key="option.value"
         :class="[
           store.activeFilters[filterKey].includes(option.value)

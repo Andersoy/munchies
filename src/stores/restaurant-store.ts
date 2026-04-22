@@ -206,6 +206,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
       filterArray.splice(index, 1)
     }
   }
+
   return {
     restaurants,
     foodCategoryFilters,
