@@ -80,7 +80,6 @@ export const useRestaurantStore = defineStore('restaurant', () => {
         //   Sort by placing open restaurants first
       })
       .sort((a, b) => {
-        if (a.isCurrentlyOpen === b.isCurrentlyOpen) return b.rating - a.rating
         return a.isCurrentlyOpen ? -1 : 1
       })
   })
@@ -94,7 +93,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
       const res = await fetch(`${API_URL}/restaurants`)
 
       if (!res.ok) {
-        throw new Error(`Kunne ikke hente restauranter: ${res.status}`)
+        throw new Error(`Unable to fetch restaurants: ${res.status}`)
       }
 
       const data: RestaurantsResponse = await res.json()
@@ -120,7 +119,6 @@ export const useRestaurantStore = defineStore('restaurant', () => {
           return {
             id: restaurant.id,
             name: restaurant.name,
-            rating: restaurant.rating,
             filterIds: restaurant.filter_ids,
             imageUrl: restaurant.image_url,
             deliveryTimeMinutes: restaurant.delivery_time_minutes,
@@ -130,7 +128,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
         }),
       )
     } catch (err) {
-      error.value = err instanceof Error ? err.message : 'Ukjent feil ved henting av restauranter'
+      error.value = err instanceof Error ? err.message : 'Unknown error while fetching restaurants'
     } finally {
       loadingRestaurants.value = false
     }

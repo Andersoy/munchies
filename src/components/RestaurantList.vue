@@ -10,7 +10,10 @@ const { filteredRestaurants, error, loadingRestaurants } = storeToRefs(store)
 
 <template>
   <!-- Skeleton: loading screen -->
-  <div v-if="loadingRestaurants" class="grid grid-cols-1 md:grid-cols-3 gap-[10px] md:gap-[17px]">
+  <div
+    v-if="loadingRestaurants"
+    class="grid grid-cols-1 md:grid-cols-3 gap-[10px] md:gap-[17px] max-w-[1015px] pb-10"
+  >
     <RestaurantCardSkeleton v-for="n in 6" :key="n" />
   </div>
 

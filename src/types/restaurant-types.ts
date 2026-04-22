@@ -40,7 +40,6 @@ export interface RestaurantAPIErrorResponse {
 export interface Restaurant {
   id: string
   name: string
-  rating: number
   filterIds: string[]
   imageUrl: string
   deliveryTimeMinutes: number

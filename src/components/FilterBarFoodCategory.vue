@@ -9,6 +9,7 @@ const store = useRestaurantStore()
 <template>
     <div class="flex overflow-x-auto gap-[10px] pr-5 pb-2">
       <button
+        type="button"
         v-for="foodCategory in store.foodCategoryFilters"
         :key="foodCategory.id"
         @click="store.toggleFilters('foodCategory', foodCategory.id)"

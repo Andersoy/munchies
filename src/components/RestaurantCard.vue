@@ -19,7 +19,7 @@ function formatDeliveryTime(deliveryTimeInMinutes: number) {
 
 <template>
   <!--  TODO Add hover effect-->
-  <div
+  <div role="button" tabindex="0"
     class="card-shadow w-full h-[202px] rounded-[8px] border-[0.6px] border-black/10 bg-white cursor-pointer relative overflow-hidden"
   >
     <!--    Hard coded opening time information as this was not available from API-->
@@ -34,7 +34,8 @@ function formatDeliveryTime(deliveryTimeInMinutes: number) {
 
     <img
       :src="BASE_URL + restaurant.imageUrl"
-      alt="food picture"
+      :alt="restaurant.name"
+      loading="lazy"
       class="absolute -right-7.5 -top-7.5 w-[140px] h-[140px] object-cover rounded-[8px]"
       :class="restaurant.isCurrentlyOpen ? 'opacity-100' : 'opacity-20'"
     />
@@ -67,7 +68,7 @@ function formatDeliveryTime(deliveryTimeInMinutes: number) {
         <h3 class="text-[24px] font-normal leading-none tracking-[-0.5px]">
           {{ restaurant.name }}
         </h3>
-        <!--      green button-->
+        <!--      green circle with arrow icon-->
         <div class="w-8 h-8 rounded-full bg-[#00703A] flex items-center justify-center shrink-0">
           <ArrowIcon />
         </div>
