@@ -35,7 +35,7 @@ onMounted(async () => {
       <!--      />-->
 
       <!--      Only show if API returns food category filters-->
-      <FilterBarFoodCategory v-if="store.foodCategoryFilters.length > 0" class="pl-5 mt-6" />
+      <FilterBarFoodCategory v-if="store.foodCategoryFilters.length > 0" class="pl-5 mt-6 md:mt-0" />
       <h2 class="px-5 text-[20px] font-normal leading-none tracking-[-0.5px] mt-4 mb-8">
         Restaurants
       </h2>
