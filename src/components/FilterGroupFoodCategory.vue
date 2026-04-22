@@ -10,7 +10,7 @@ const store = useRestaurantStore()
 <template>
   <div>
     <h3
-      class="text-[12px] font-[590] leading-none tracking-[-0.5px] uppercase opacity-40"
+      class="text-[12px] font-[590] leading-none tracking-[-0.5px] uppercase opacity-40 mb-4"
     >
       Food Category
     </h3>
@@ -25,7 +25,7 @@ const store = useRestaurantStore()
             ? 'border-blue-500'
             : 'border-black/10'
         "
-        class="h-[31px] py-2 px-3 rounded-lg border-[0.6px] bg-white card-shadow cursor-pointer text-[12px] font-normal leading-[125%] tracking-[-0.5px]"
+        class="h-[31px] py-2 px-3 rounded-[8px] border-[0.6px] bg-white card-shadow cursor-pointer text-[12px] font-normal leading-[125%] tracking-[-0.5px] w-fit"
       >
         {{ foodCategory.name }}
       </button>

@@ -5,35 +5,35 @@ type FilterKey = 'deliveryTime' | 'priceRange'
 
 const store = useRestaurantStore()
 
-const { layout = 'horizontal' } = defineProps<{
+const { compact = false } = defineProps<{
   layout?: 'horizontal' | 'vertical'
   filterKey: FilterKey
-  options: { label: string; value: string}[]
+  options: { label: string; value: string }[]
   title: string
+  compact?: boolean
 }>()
-
 </script>
 
 <template>
   <div>
     <h3
-      :class="layout === 'horizontal' ? 'mb-[10px]' : 'mb-[4]'"
-      class="text-[12px] font-[590] leading-none tracking-[-0.5px] uppercase opacity-40"
+      class="mb-[10px] md:mb-[16px] text-[12px] font-[590] leading-none tracking-[-0.5px] uppercase opacity-40"
     >
-      {{title}}
+      {{ title }}
     </h3>
-    <div :class="layout === 'horizontal' ? 'flex flex-row' : 'flex flex-col'" class="gap-2.5">
+    <div :class="layout === 'horizontal' ? 'flex flex-row flex-wrap' : 'flex flex-col'" class="gap-2.5">
       <!-- TODO: find active border color from Figma -->
       <button
         @click="store.toggleFilters(filterKey, option.value)"
         v-for="option in options"
         :key="option.value"
-        :class="
+        :class="[
           store.activeFilters[filterKey].includes(option.value)
             ? 'border-blue-500'
-            : 'border-black/10'
-        "
-        class="h-[31px] py-2 px-3 rounded-lg border-[0.6px] bg-white card-shadow cursor-pointer text-[12px] font-normal leading-[125%] tracking-[-0.5px]"
+            : 'border-black/10',
+          compact ? 'px-2' : 'px-3',
+        ]"
+        class="h-[31px] py-2 rounded-lg border-[0.6px] bg-white card-shadow cursor-pointer text-[12px] font-normal leading-[125%] tracking-[-0.5px] whitespace-nowrap w-fit"
       >
         {{ option.label }}
       </button>
