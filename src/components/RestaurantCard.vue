@@ -20,7 +20,7 @@ function formatDeliveryTime(deliveryTimeInMinutes: number) {
 <template>
   <!--  TODO Add hover effect-->
   <div
-    class="card-shadow w-[327px] h-[202px] rounded-[8px] border-[0.6px] border-black/10 bg-white cursor-pointer relative overflow-hidden"
+    class="card-shadow w-full h-[202px] rounded-[8px] border-[0.6px] border-black/10 bg-white cursor-pointer relative overflow-hidden"
   >
     <!--    Hard coded opening time as this info was not available from API-->
     <div
@@ -54,6 +54,7 @@ function formatDeliveryTime(deliveryTimeInMinutes: number) {
         </div>
         <!--      delivery time-->
         <span
+          v-if="restaurant.isCurrentlyOpen"
           class="card-shadow rounded-[88px] border-[0.6px] border-black/10 bg-white py-2 px-3 text-[12px] font-normal leading-none tracking-[-0.5px]"
         >
           {{ formatDeliveryTime(restaurant.deliveryTimeMinutes) }}
