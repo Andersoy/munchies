@@ -30,7 +30,7 @@ onMounted(async () => {
         :options="deliveryTimes"
         title="Delivery Time"
       />
-      <!--      Design does not show this filter on mobile, uncomment to show-->
+      <!--      Design does not show price range filter on mobile. In case this is a mistake I am including it disabled-->
       <!--      <FilterGroup-->
       <!--        v-if="store.priceRangeOptions.length > 0"-->
       <!--        class="md:hidden pt-5 px-5"-->

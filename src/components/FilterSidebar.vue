@@ -18,8 +18,6 @@ const foodCategoryOptions = computed(() =>
     <h2 class="text-2xl font-sf leading-none font-normal tracking-[-0.5px] mb-8">Filter</h2>
     <!--    Food Category-->
     <div class="flex flex-col gap-8">
-<!--      <FilterGroupFoodCategory />-->
-
       <FilterGroup
         :layout="'vertical'"
         filterKey="foodCategory"

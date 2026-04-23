@@ -18,7 +18,6 @@ function formatDeliveryTime(deliveryTimeInMinutes: number) {
 </script>
 
 <template>
-  <!--  TODO Add hover effect-->
   <div role="button" tabindex="0"
     class="card-shadow w-full h-[202px] rounded-[8px] border-[0.6px] border-black/10 bg-white cursor-pointer relative overflow-hidden"
   >
