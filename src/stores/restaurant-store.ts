@@ -177,7 +177,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
     filterError.value = null
 
     try {
-      const res = await fetch(`${API_URL}/filters`)
+      const res = await fetch(`${API_URL}/filter`)
 
       if (!res.ok) {
         throw new Error(`Failed to fetch filters: ${res.status}`)
