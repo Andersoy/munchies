@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { useRestaurantStore } from '@/stores/restaurant-store.ts'
-
-type FilterKey = 'deliveryTime' | 'priceRange' | 'foodCategory'
+import type { FilterKey, FilterOption } from '@/types/filter-types.ts'
 
 const store = useRestaurantStore()
 
 const { compact = false } = defineProps<{
   layout?: 'horizontal' | 'vertical'
   filterKey: FilterKey
-  options: { label: string; value: string }[]
+  options: FilterOption[]
   title: string
   compact?: boolean
 }>()

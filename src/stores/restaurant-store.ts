@@ -13,6 +13,7 @@ import type {
   RestaurantsResponse,
 } from '@/types/restaurant-types'
 import { deliveryTimes } from '@/constants/filters.ts'
+import type { ActiveFilters, FilterKey, FilterOption } from '@/types/filter-types.ts'
 
 
 export const useRestaurantStore = defineStore('restaurant', () => {
@@ -24,17 +25,17 @@ export const useRestaurantStore = defineStore('restaurant', () => {
   const filterError = ref<string | null>(null)
   const hasSeenSplash = ref(false)
   const hasClickedContinue = ref(false)
-  const activeFilters = ref({
-    deliveryTime: [] as string[],
-    foodCategory: [] as string[],
-    priceRange: [] as string[],
+  const activeFilters = ref<ActiveFilters>({
+    deliveryTime: [],
+    foodCategory: [],
+    priceRange: [],
   })
 
   // Store price range IDs one time to avoid unnecessary API calls
   const priceRangeCache = ref<Record<string, Promise<string>>>({})
 
   // To be used in toggleFilters()
-  const priceRangeOptions = ref<{ label: string; value: string }[]>([])
+  const priceRangeOptions = ref<FilterOption[]>([])
 
   const filteredRestaurants = computed(() => {
     return restaurants.value
@@ -198,13 +199,12 @@ export const useRestaurantStore = defineStore('restaurant', () => {
     }
   }
 
-  function toggleFilters(filterKey: string, value: string) {
-    const filterArray = activeFilters.value[filterKey as keyof typeof activeFilters.value]
-    const index = filterArray.indexOf(value)
+  function toggleFilters(filterKey: FilterKey, filterValue: string) {
+    const index = activeFilters.value[filterKey].indexOf(filterValue)
     if (index === -1) {
-      filterArray.push(value)
+      activeFilters.value[filterKey].push(filterValue)
     } else {
-      filterArray.splice(index, 1)
+      activeFilters.value[filterKey].splice(index, 1)
     }
   }
 
