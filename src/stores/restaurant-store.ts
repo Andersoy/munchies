@@ -20,7 +20,8 @@ export const useRestaurantStore = defineStore('restaurant', () => {
   const foodCategoryFilters = ref<FoodCategoryFilter[]>([])
   const loadingRestaurants = ref(false)
   const loadingFilters = ref(false)
-  const error = ref<string | null>(null)
+  const restaurantError = ref<string | null>(null)
+  const filterError = ref<string | null>(null)
   const hasSeenSplash = ref(false)
   const hasClickedContinue = ref(false)
   const activeFilters = ref({
@@ -87,7 +88,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
   // API
   async function fetchRestaurants() {
     loadingRestaurants.value = true
-    error.value = null
+    restaurantError.value = null
 
     try {
       const res = await fetch(`${API_URL}/restaurants`)
@@ -128,7 +129,8 @@ export const useRestaurantStore = defineStore('restaurant', () => {
         }),
       )
     } catch (err) {
-      error.value = err instanceof Error ? err.message : 'Unknown error while fetching restaurants'
+      restaurantError.value =
+        err instanceof Error ? err.message : 'Unknown error while fetching restaurants'
     } finally {
       loadingRestaurants.value = false
     }
@@ -172,10 +174,10 @@ export const useRestaurantStore = defineStore('restaurant', () => {
 
   async function fetchFilters() {
     loadingFilters.value = true
-    error.value = null
+    filterError.value = null
 
     try {
-      const res = await fetch(`${API_URL}/filter`)
+      const res = await fetch(`${API_URL}/filters`)
 
       if (!res.ok) {
         throw new Error(`Failed to fetch filters: ${res.status}`)
@@ -189,7 +191,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
         imageUrl: filter.image_url,
       }))
     } catch (err) {
-      error.value = err instanceof Error ? err.message : 'Unknown error while fetching filters'
+      filterError.value = err instanceof Error ? err.message : 'Unknown error while fetching filters'
     } finally {
       loadingFilters.value = false
     }
@@ -212,7 +214,8 @@ export const useRestaurantStore = defineStore('restaurant', () => {
     filteredRestaurants,
     loadingRestaurants,
     loadingFilters,
-    error,
+    restaurantError,
+    filterError,
     fetchRestaurants,
     fetchFilters,
     hasSeenSplash,

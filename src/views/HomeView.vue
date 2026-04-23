@@ -17,6 +17,12 @@ onMounted(async () => {
   <main class="mx-auto md:flex md:ml-10 md:gap-5 md:max-w-360">
     <FilterSidebar class="hidden md:block pl-5" />
     <div class="flex-1 min-w-0">
+      <p
+        v-if="store.filterError"
+        class="px-5 py-[10px] text-[14px] font-normal leading-[150%] tracking-[-0.5px] text-black/60"
+      >
+        Some filters are unavailable right now.
+      </p>
       <FilterGroup
         class="px-5 md:pt-5 md:hidden"
         :layout="'horizontal'"

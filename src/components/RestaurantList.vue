@@ -5,7 +5,7 @@ import RestaurantCard from '@/components/RestaurantCard.vue'
 import RestaurantCardSkeleton from '@/components/RestaurantCardSkeleton.vue'
 
 const store = useRestaurantStore()
-const { filteredRestaurants, error, loadingRestaurants } = storeToRefs(store)
+const { filteredRestaurants, restaurantError, loadingRestaurants } = storeToRefs(store)
 </script>
 
 <template>
@@ -18,7 +18,7 @@ const { filteredRestaurants, error, loadingRestaurants } = storeToRefs(store)
   </div>
 
   <!-- Error -->
-  <div v-else-if="error" class="flex flex-col items-center justify-center py-20 gap-4">
+  <div v-else-if="restaurantError" class="flex flex-col items-center justify-center py-20 gap-4">
     <p>Something went wrong</p>
     <button
       type="button"
