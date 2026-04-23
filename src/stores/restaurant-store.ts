@@ -34,7 +34,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
   // Store price range IDs one time to avoid unnecessary API calls
   const priceRangeCache = ref<Record<string, Promise<string>>>({})
 
-  // To be used in toggleFilters()
+  // Used to store price range options from the API for use in filter components
   const priceRangeOptions = ref<FilterOption[]>([])
 
   const filteredRestaurants = computed(() => {
