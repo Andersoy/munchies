@@ -31,7 +31,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
     priceRange: [],
   })
 
-  // Store price range IDs one time to avoid unnecessary API calls
+  // Store price range one time to avoid unnecessary API calls
   const priceRangeCache = ref<Record<string, Promise<string>>>({})
 
   // Used to store price range options from the API for use in filter components
@@ -82,7 +82,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
         //   Sort by placing open restaurants first
       })
       .sort((a, b) => {
-        if(a.isCurrentlyOpen === b.isCurrentlyOpen) return 0
+        if (a.isCurrentlyOpen === b.isCurrentlyOpen) return 0
         return a.isCurrentlyOpen ? -1 : 1
       })
   })

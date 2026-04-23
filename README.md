@@ -35,7 +35,7 @@ This case included some ambiguity in both the Figma file and the API responses, 
 API results were mapped to the corresponding types/objects.
 
 As not all restaurant information was available in the main restaurant API response, new API calls had to be done to get the 
-relevant filters. For price range, a maximum of 4 calls was done as there were only 4 different price range categories.
+relevant filters. For price range, I use promise caching to avoid racing conditions and duplicated API calls as there were only 4 different price range categories.
 
 ### Error handling
 
@@ -83,3 +83,7 @@ the closest alternative I could find from the SF Pro fonts.
 
 The design did not include information for the screen sizes between mobile and desktop, so I made a few choices to keep the 
 design responsive along the way.
+
+
+## Improvements
+When no restaurants match the filters show a message.

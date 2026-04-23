@@ -14,7 +14,7 @@ const { compact = false } = defineProps<{
 </script>
 
 <template>
-  <div>
+  <div v-if="options.length > 0">
     <h3
       class="mb-[10px] md:mb-[16px] text-[12px] font-[590] leading-none tracking-[-0.5px] uppercase opacity-40"
     >

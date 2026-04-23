@@ -5,8 +5,8 @@ import { useRestaurantStore } from '@/stores/restaurant-store.ts'
 const store = useRestaurantStore()
 
 function handleContinue() {
-  store.hasSeenSplash = true;
-  store.hasClickedContinue = true;
+  store.hasSeenSplash = true
+  store.hasClickedContinue = true
 }
 </script>
 
