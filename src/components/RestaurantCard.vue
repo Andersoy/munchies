@@ -22,7 +22,6 @@ function formatDeliveryTime(deliveryTimeInMinutes: number) {
   <div role="button" tabindex="0"
     class="card-shadow w-full h-[202px] rounded-[8px] border-[0.6px] border-black/10 bg-white cursor-pointer relative overflow-hidden"
   >
-    <!--    Hard coded opening time information as this was not available from API-->
     <div
       v-if="!restaurant.isCurrentlyOpen"
       class="absolute left-1/2 -translate-x-1/2 top-[85px] card-shadow h-[28px] rounded-[4px] border-[0.6px] border-black/10 bg-[#FAFAFA] py-2 pr-3 pl-[10px] flex items-center"

@@ -81,6 +81,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
         //   Sort by placing open restaurants first
       })
       .sort((a, b) => {
+        if(a.isCurrentlyOpen === b.isCurrentlyOpen) return 0
         return a.isCurrentlyOpen ? -1 : 1
       })
   })

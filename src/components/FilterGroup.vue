@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRestaurantStore } from '@/stores/restaurant-store.ts'
 
-type FilterKey = 'deliveryTime' | 'priceRange'
+type FilterKey = 'deliveryTime' | 'priceRange' | 'foodCategory'
 
 const store = useRestaurantStore()
 
@@ -21,8 +21,10 @@ const { compact = false } = defineProps<{
     >
       {{ title }}
     </h3>
-    <div :class="layout === 'horizontal' ? 'flex flex-row flex-wrap' : 'flex flex-col'" class="gap-2.5">
-      <!-- TODO: find active border color from Figma -->
+    <div
+      :class="layout === 'horizontal' ? 'flex flex-row flex-wrap' : 'flex flex-col'"
+      class="gap-2.5"
+    >
       <button
         type="button"
         v-for="option in options"
@@ -30,11 +32,11 @@ const { compact = false } = defineProps<{
         :key="option.value"
         :class="[
           store.activeFilters[filterKey].includes(option.value)
-            ? 'border-blue-500'
-            : 'border-black/10',
+            ? 'border-[#00703A] filter-active-shadow'
+            : 'border-black/10 card-shadow',
           compact ? 'px-2' : 'px-3',
         ]"
-        class="h-[31px] py-2 rounded-lg border-[0.6px] bg-white card-shadow cursor-pointer text-[12px] font-normal leading-[125%] tracking-[-0.5px] whitespace-nowrap w-fit"
+        class="h-[31px] py-2 rounded-lg border-[0.6px] bg-white cursor-pointer text-[12px] font-normal leading-[125%] tracking-[-0.5px] whitespace-nowrap w-fit"
       >
         {{ option.label }}
       </button>
