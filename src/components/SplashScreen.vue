@@ -21,7 +21,7 @@ function handleContinue() {
     </div>
     <button
       @click="handleContinue"
-      class="w-[327px]  h-[56px] rounded-lg border border-white mb-6 text-[16px] font-bold leading-none tracking-[-0.5px] text-white bg-transparent mx-auto block cursor-pointer"
+      class="w-[327px] h-[56px] rounded-lg border border-white mb-6 text-[16px] font-bold leading-none tracking-[-0.5px] text-white bg-transparent mx-auto block cursor-pointer"
     >
       Continue
     </button>
