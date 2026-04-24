@@ -13,7 +13,7 @@ function formatDeliveryTime(deliveryTimeInMinutes: number) {
     (dt) => deliveryTimeInMinutes >= dt.min && deliveryTimeInMinutes < dt.max,
   )
 
-  return timeRange?.label
+  return timeRange?.label ?? ''
 }
 </script>
 
@@ -69,7 +69,7 @@ function formatDeliveryTime(deliveryTimeInMinutes: number) {
         </h3>
         <!--      green circle with arrow icon-->
         <div class="w-8 h-8 rounded-full bg-[#00703A] flex items-center justify-center shrink-0">
-          <ArrowIcon />
+          <ArrowIcon aria-hidden="true"/>
         </div>
       </div>
     </div>

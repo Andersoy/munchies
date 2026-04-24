@@ -26,7 +26,7 @@ onMounted(async () => {
       <FilterGroup
         class="px-5 md:pt-5 md:hidden"
         :layout="'horizontal'"
-        filter-key="deliveryTime"
+        filterKey="deliveryTime"
         :options="deliveryTimes"
         title="Delivery Time"
       />

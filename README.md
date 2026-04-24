@@ -83,3 +83,6 @@ the closest alternative I could find from the SF Pro fonts I had available.
 
 The design did not include information for the screen sizes between mobile and desktop, so I made a few choices to keep the 
 design responsive along the way.
+
+### Future improvements
+Add timeout handling to prevent API calls from hanging indefinitely  

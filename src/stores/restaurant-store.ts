@@ -91,6 +91,8 @@ export const useRestaurantStore = defineStore('restaurant', () => {
   async function fetchRestaurants() {
     loadingRestaurants.value = true
     restaurantError.value = null
+    priceRangeOptions.value = []
+    priceRangeCache.value = {}
 
     try {
       const res = await fetch(`${API_URL}/restaurants`)
@@ -112,7 +114,7 @@ export const useRestaurantStore = defineStore('restaurant', () => {
             )
           }
           priceRange =
-            (await priceRangeCache.value[restaurant.price_range_id]) ?? 'Price Range not found'
+            (await priceRangeCache.value[restaurant.price_range_id]) ?? 'Price range not found'
 
           // Storing price range to be used for filtering
           if (!priceRangeOptions.value.some((o) => o.value === priceRange)) {
@@ -214,7 +216,6 @@ export const useRestaurantStore = defineStore('restaurant', () => {
     activeFilters,
     filteredRestaurants,
     loadingRestaurants,
-    loadingFilters,
     restaurantError,
     filterError,
     fetchRestaurants,
