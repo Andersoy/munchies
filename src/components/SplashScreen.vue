@@ -27,5 +27,3 @@ function handleContinue() {
     </button>
   </div>
 </template>
-
-<style scoped></style>

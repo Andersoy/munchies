@@ -38,7 +38,7 @@ function formatDeliveryTime(deliveryTimeInMinutes: number) {
       :class="restaurant.isCurrentlyOpen ? 'opacity-100' : 'opacity-20'"
     />
     <div class="p-4 flex flex-col justify-between h-full">
-      <div class="flex flex-row gap-1">
+      <div class="flex gap-1">
         <!--      Open status-->
         <div
           class="flex gap-1 items-center card-shadow rounded-[88px] border-[0.6px] border-black/10 bg-white py-2 pr-3 pl-[10px]"
@@ -60,7 +60,7 @@ function formatDeliveryTime(deliveryTimeInMinutes: number) {
         </span>
       </div>
       <div
-        class="flex flex-row justify-between"
+        class="flex justify-between"
         :class="restaurant.isCurrentlyOpen ? 'opacity-100' : 'opacity-20'"
       >
         <h3 class="text-[24px] font-normal leading-none tracking-[-0.5px]">
@@ -74,5 +74,3 @@ function formatDeliveryTime(deliveryTimeInMinutes: number) {
     </div>
   </div>
 </template>
-
-<style scoped></style>

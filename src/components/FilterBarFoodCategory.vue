@@ -30,5 +30,3 @@ const store = useRestaurantStore()
     </button>
   </div>
 </template>
-
-<style scoped></style>

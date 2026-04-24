@@ -40,5 +40,3 @@ const { filteredRestaurants, restaurantError, loadingRestaurants } = storeToRefs
     />
   </div>
 </template>
-
-<style scoped></style>

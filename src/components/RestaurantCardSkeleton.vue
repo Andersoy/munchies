@@ -17,5 +17,3 @@
     <div class="absolute -right-7.5 -top-7.5 w-[140px] h-[140px] bg-gray-200 rounded-[8px]" />
   </div>
 </template>
-
-<style scoped></style>

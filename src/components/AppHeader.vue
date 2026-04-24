@@ -44,5 +44,3 @@ const { color = 'black' } = defineProps<{
     </svg>
   </header>
 </template>
-
-<style scoped></style>
