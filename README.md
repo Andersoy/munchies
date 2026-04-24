@@ -1,6 +1,6 @@
 # Munchies
 
-A small Vue 3 + TypeScript case project based on a provided Figma design and external API.
+A Vue 3 + TypeScript case project based on a provided Figma design and external API.
 
 ## Run locally
 
@@ -45,7 +45,7 @@ come from the API. The other filters are not shown and an error message shows in
 
 ### Filtering behavior
 
-The Figma design did not clearly define active states or all filtering rules, so filtering was implemented with a consistent pattern:
+The Figma design did not clearly define filtering rules, so filtering was implemented with a consistent pattern:
 
 - Multiple selected options within the same filter group use `OR`
 - Different filter groups combine with `AND`
@@ -61,7 +61,7 @@ To keep the UI consistent, active filters use a border with the green color as s
 
 The design shows a message stating the opening time of the restaurant, but the API only provides whether a restaurant is open or closed.
 
-Because opening-time details are not available from the API, closed restaurants use the more general message: `Currently closed`
+Because opening-time details are not available from the API, closed restaurants use the message: `Currently closed`
 
 ### Mobile price range filter
 
@@ -77,13 +77,9 @@ pulsating.
 
 The design specifies SF Pro, and includes a download link. This is an Apple-font and is not readily available for use on Windows or Linux without a license.
 However, I have used it for this project and downloaded the available fonts from GitHub, but not all versions were available. Specifically the Expanded Bold so I used 
-the closest alternative I could find from the SF Pro fonts.
+the closest alternative I could find from the SF Pro fonts I had available.
 
 ### Responsive design
 
 The design did not include information for the screen sizes between mobile and desktop, so I made a few choices to keep the 
 design responsive along the way.
-
-
-## Improvements
-When no restaurants match the filters show a message.
