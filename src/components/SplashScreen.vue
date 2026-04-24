@@ -12,7 +12,7 @@ function handleContinue() {
 
 <template>
   <div class="bg-[#00703A] w-screen h-dvh flex flex-col justify-between">
-    <AppHeader color="white" />
+    <AppHeader color="white" class="[@media(max-height:500px)]:pt-6 [@media(max-height:500px)]:pb-3" />
     <div class="ml-6 text-white max-w-[246px]">
       <h2 class="font-display text-[48px] font-extrabold leading-none tracking-[-1px]">Treat Yourself.</h2>
       <p class="text-[14px] font-normal leading-[150%] tracking-[-0.5px]">
@@ -21,7 +21,7 @@ function handleContinue() {
     </div>
     <button
       @click="handleContinue"
-      class="w-[327px] h-[56px]  rounded-lg border border-white mb-6 text-[16px] font-bold leading-none tracking-[-0.5px] text-white bg-transparent mx-auto block cursor-pointer"
+      class="w-[327px]  h-[56px] rounded-lg border border-white mb-6 text-[16px] font-bold leading-none tracking-[-0.5px] text-white bg-transparent mx-auto block cursor-pointer"
     >
       Continue
     </button>
