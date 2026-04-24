@@ -2,6 +2,8 @@
 
 A Vue 3 + TypeScript case project based on a provided Figma design and external API.
 
+Website hosted on https://munchies-roan.vercel.app/
+
 ## Run locally
 
 ```bash
