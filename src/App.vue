@@ -27,7 +27,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <SplashScreen v-if="!hasSeenSplash" class="md:hidden" />
+  <SplashScreen v-if="!hasSeenSplash" />
   <template v-else>
     <AppHeader />
     <RouterView />

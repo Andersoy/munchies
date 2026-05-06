@@ -12,7 +12,7 @@ const { filteredRestaurants, restaurantError, loadingRestaurants } = storeToRefs
   <!-- Skeleton: loading screen -->
   <div
     v-if="loadingRestaurants"
-    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-[10px] md:gap-[17px] max-w-[1015px] pb-10"
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-[10px] md:gap-[17px] max-w-[1035px] pb-10 md:pr-5"
   >
     <RestaurantCardSkeleton v-for="n in 6" :key="n" />
   </div>
@@ -31,7 +31,7 @@ const { filteredRestaurants, restaurantError, loadingRestaurants } = storeToRefs
 
   <div
     v-else
-    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-[10px] md:gap-[17px] max-w-[1015px] pb-10"
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-[10px] md:gap-[17px] max-w-[1035px] pb-10 md:pr-5"
   >
     <RestaurantCard
       v-for="restaurant in filteredRestaurants"

@@ -24,7 +24,7 @@ onMounted(async () => {
         Some filters are unavailable right now.
       </p>
       <FilterGroup
-        class="px-5 md:pt-5 md:hidden"
+        class="pl-6 md:hidden"
         :layout="'horizontal'"
         filterKey="deliveryTime"
         :options="deliveryTimes"
@@ -33,7 +33,7 @@ onMounted(async () => {
       <!--      Design does not show price range filter on mobile. In case this is a mistake I am including it disabled-->
       <!--      <FilterGroup-->
       <!--        v-if="store.priceRangeOptions.length > 0"-->
-      <!--        class="md:hidden pt-5 px-5"-->
+      <!--        class="md:hidden pt-5 pl-6"-->
       <!--        :layout="'horizontal'"-->
       <!--        filter-key="priceRange"-->
       <!--        :options="store.priceRangeOptions"-->
@@ -41,11 +41,11 @@ onMounted(async () => {
       <!--      />-->
 
       <!--      Only show if API returns food category filters-->
-      <FilterBarFoodCategory v-if="store.foodCategoryFilters.length > 0" class="pl-5 mt-6 md:mt-0" />
-      <h2 class="px-5 text-[20px] font-normal leading-none tracking-[-0.5px] mt-4 mb-8">
+      <FilterBarFoodCategory v-if="store.foodCategoryFilters.length > 0" class="pl-6 md:pl-0 mt-6 md:mt-0" />
+      <h2 class="px-6 text-[20px] font-normal leading-none tracking-[-0.5px] mt-4 mb-8">
         Restaurants
       </h2>
-      <RestaurantList class="px-5 w-full" />
+      <RestaurantList class="px-6 w-full md:px-0" />
     </div>
   </main>
 </template>
