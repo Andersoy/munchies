@@ -38,6 +38,7 @@ function formatDeliveryTime(deliveryTimeInMinutes: number) {
       class="absolute -right-7.5 -top-7.5 w-[140px] h-[140px] object-cover rounded-[8px]"
       :class="restaurant.isCurrentlyOpen ? 'opacity-100' : 'opacity-20'"
     />
+
     <div class="p-4 flex flex-col justify-between h-full">
       <div class="flex gap-1">
         <!--      Open status-->
